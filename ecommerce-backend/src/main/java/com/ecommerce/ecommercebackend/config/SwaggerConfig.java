@@ -11,6 +11,7 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
@@ -25,7 +26,7 @@ public class SwaggerConfig {
     }
 
     private ApiInfo getApiInfo(){
-        Contact contact = new Contact("jovandeka", "https://github.com/jovandeka", "bogdanovicjob@gmail.com");
+        Contact contact = new Contact("Jovan Bogdanović", "https://github.com/jovandeka", "bogdanovicjob@gmail.com");
         return new ApiInfoBuilder()
             .title("Ecommerce API")
             .description("Ecommerce api")
