@@ -1,10 +1,47 @@
 <template>
-  <nav>
+  <Navbar />
+  <div id="nav">
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  </div>
+  <router-view
+  :baseURL="baseURL"
+  :categories="categories"
+  :products="products"
+  >
+  </router-view>
 </template>
+
+<script>
+import axios from "axios";
+import Navbar from "./components/Navbar.vue";
+export default {
+  components: { Navbar },
+  data() {
+    return {
+      baseURL: "http://localhost:8080",
+      products: [],
+      categories: []
+    }
+  },
+  methods:{
+    async fetchData(){
+      await axios.get(this.baseURL + "/category/list")
+      .then(res=>{
+        this.categories=res.data
+      }).catch((err)=> console.log('err', err));
+
+      await axios.get(this.baseURL + "/product/")
+      .then(res=>{
+        this.products=res.data
+      }).catch((err)=> console.log('err', err));
+    }
+  },
+  mounted(){
+    this.fetchData();
+  }
+};
+</script>
 
 <style>
 #app {
@@ -15,16 +52,16 @@
   color: #2c3e50;
 }
 
-nav {
+#nav {
   padding: 30px;
 }
 
-nav a {
+#nav a {
   font-weight: bold;
   color: #2c3e50;
 }
 
-nav a.router-link-exact-active {
+#nav a.router-link-exact-active {
   color: #42b983;
 }
 </style>
