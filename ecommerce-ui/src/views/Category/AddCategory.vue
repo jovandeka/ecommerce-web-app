@@ -59,6 +59,7 @@ export default{
                   'Content-Type': 'application/json'
               }
           }).then(()=>{
+            this.$router.push({ name: 'Category' });
               sweetalert({
                   text: "Category created successfully",
                   icon: "success",
