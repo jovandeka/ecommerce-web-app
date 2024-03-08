@@ -66,15 +66,16 @@
                     price: this.price
                 };
 
-                axios.post(this.baseURL+"product/add", newProduct)
+                axios.post(this.baseURL+"/product/add", newProduct)
                 .then(() => {
                     this.$router.push({name: 'AdminProduct'});
                     swal({
-                        text: "Product added",
-                        icon: "success"
+                        text: "Product created successfully",
+                        icon: "success",
                     })
                 }).catch((err)=> {
                     console.log("err", err);
+                    alert('Sorry, there was an issue connecting to the server. Please try again later.');
                 })
 
 

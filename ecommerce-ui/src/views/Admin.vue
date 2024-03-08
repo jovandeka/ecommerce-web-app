@@ -1,5 +1,5 @@
 <template>
-    <router-link :to="{name: 'CategoryList'}" >
+    <router-link :to="{name: 'Category'}" >
         <button class="btn btn-primary btn-lg"> Admin Category</button>
     </router-link>
     <br />

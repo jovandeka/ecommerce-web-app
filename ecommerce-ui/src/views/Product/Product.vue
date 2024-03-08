@@ -3,9 +3,9 @@
         <div class="row">
             <div class="col-12 text-center">
                 <h4> Our Products</h4>
-                <router-link :to="{name: 'AddProduct'}" style="float: right">
-                    <button class="btn" >
-                        Add Product
+                <router-link :to="{name: 'AddProduct'}" id="add-product">
+                    <button class="btn btn-info" >
+                        Add a new Product
                     </button> </router-link>
             </div>
         </div>
@@ -27,3 +27,16 @@
         props:["products"]
     }
 </script>
+
+<style>
+h4 {
+font-family: 'Roboto', sans-serif;
+color: #484848;
+font-weight: 700;
+}
+
+#add-product {
+float: right;
+font-weight: 500;
+}
+</style>

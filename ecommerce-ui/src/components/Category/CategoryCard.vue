@@ -1,11 +1,11 @@
 <template>
-    <div class="card w-100 h-100" style="margin-top: 10px;">
+    <div class="card w-100 h-100">
         <div class="embed-responsive embed-responsive-16by9">
             <img :src="category.imageUrl" class="card-img-top embed-responsive-item" alt="Category Image">
         </div>
         <div class="card-body">
             <h5 class="card-title">{{ category.categoryName }}</h5>
-            <p class="card-text">{{ category.description }}</p>
+            <p class="card-text">{{ category.description.substring(0, 65) }}</p>
             <a href="#" class="btn btn-primary">Go somewhere</a>
         </div>
     </div>
