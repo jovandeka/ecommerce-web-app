@@ -37,8 +37,6 @@
             </div>
             <div class="col-3"></div>
         </div>
-
-<!--        Form-->
     </div>
 </template>
 <script>

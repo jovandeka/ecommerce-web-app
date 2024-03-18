@@ -59,6 +59,8 @@ export default{
                   'Content-Type': 'application/json'
               }
           }).then(()=>{
+            // eslint-disable-next-line
+            this.$emit("fetchData");
             this.$router.push({ name: 'Category' });
               sweetalert({
                   text: "Category created successfully",
