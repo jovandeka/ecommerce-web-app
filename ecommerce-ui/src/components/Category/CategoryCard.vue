@@ -6,7 +6,7 @@
         <div class="card-body">
             <h5 class="card-title">{{ category.categoryName }}</h5>
             <p class="card-text">{{ category.description.substring(0, 65) }}</p>
-            <router-link :to="{ name: 'EditCategory', params: {id: category.id} }">
+            <router-link :to="{ name: 'EditCategory', params: {id: category.id} }" v-show="$route.name == 'Category'">
                 <button class="btn btn-primary">Edit</button>
             </router-link>
         </div>

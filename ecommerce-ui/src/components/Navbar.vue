@@ -66,8 +66,4 @@
   a {
     color: white;
   }
-
-  .navbar{
-    margin-bottom: 20px;
-  }
   </style>
