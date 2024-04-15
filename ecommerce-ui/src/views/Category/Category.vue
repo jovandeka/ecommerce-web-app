@@ -1,8 +1,8 @@
 <template>
-  <div class="container">
+  <div class="container p-4">
       <div class="row">
           <div class="col-12 text-center">
-              <h3 class="pt-3">Categories</h3>
+              <h4>Our Categories</h4>
               <router-link id="add-category" :to="{ name : 'AddCategory'}">
                   <button type="button" class="btn btn-info">Add a new Category</button>
               </router-link>

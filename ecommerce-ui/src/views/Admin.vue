@@ -1,5 +1,5 @@
 <template>
-    <div class="container py-5">
+    <div class="container p-4">
         <router-link :to="{name: 'Category'}" >
             <button class="btn btn-primary btn-lg"> Admin Category</button>
         </router-link>

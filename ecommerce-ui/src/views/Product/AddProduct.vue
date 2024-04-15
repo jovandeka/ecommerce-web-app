@@ -65,7 +65,9 @@
                 };
 
                 axios.post(this.baseURL+"/product/add", newProduct)
+
                 .then(() => {
+                    this.$emit("fetchData");
                     this.$router.push({name: 'AdminProduct'});
                     swal({
                         text: "Product created successfully",
