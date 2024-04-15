@@ -4,7 +4,9 @@
             <img class="card-img-top embed-responsive-item" :src="product.imageURL" alt="Card image cap" />
         </div>
         <div class="card-body">
-            <h5 class="card-title">{{ product.name }}</h5>
+            <router-link :to="{name: 'ShowDetails', params:{id: product.id}}">
+                <h5 class="card-title">{{ product.name }}</h5>
+            </router-link>
             <p class="card-text">
                 {{ product.description.substring(0, 65) }}...
             </p>
@@ -15,10 +17,13 @@
     </div>
 </template>
 <script>
+import { RouterLink } from 'vue-router';
+
     export default {
-        name: "ProductBox",
-        props: ["product"]
-    }
+    name: "ProductBox",
+    props: ["product"],
+    components: { RouterLink }
+}
 </script>
 <style scoped>
     .card-img-top {

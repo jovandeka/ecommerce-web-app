@@ -8,7 +8,7 @@
         <div class="col-md-6 col-12 pt-3 pt-md-0">
           <h4>{{ product.name }}</h4>
           <h6 class="category font-italic">{{ category.categoryName }}</h6>
-          <h6 class="font-weight-bold">$ {{ product.price }}</h6>
+          <h6 class="font-weight-bold"> {{ product.price }} €</h6>
           <p>
             {{ product.description }}
           </p>
@@ -70,16 +70,82 @@
   </template>
   
   <script>
+  import axios from 'axios';
+  import swal from 'sweetalert';
   export default {
     data() {
       return {
         product: {},
-        category: {}
+        category: {},
+        id: null,
+        token: null,
+        isAddedToWishlist: false,
+        wishlistString: "Add to wishlist",
+        quantity: 1,
       };
     },
     props: ["baseURL", "products", "categories"],
     methods: {
-      
+      addToWishList(productId) {
+        axios
+          .post(`${this.baseURL}wishlist/add?token=${this.token}`, {
+            id: productId,
+          })
+          .then(
+            (response) => {
+              if (response.status == 201) {
+                this.isAddedToWishlist = true;
+                this.wishlistString = "Added to WishList";
+              }
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+      },
+      addToCart(productId) {
+        if (!this.token) {
+          swal({
+            text: "Please log in first!",
+            icon: "error",
+          });
+          return;
+        }
+        axios
+          .post(`${this.baseURL}cart/add?token=${this.token}`, {
+            productId: productId,
+            quantity: this.quantity,
+          })
+          .then(
+            (response) => {
+              if (response.status == 201) {
+                swal({
+                  text: "Product Added to the cart!",
+                  icon: "success",
+                  closeOnClickOutside: false,
+                });
+                // refresh nav bar
+                this.$emit("fetchData");
+              }
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+      },
+  
+      listCartItems() {
+        axios.get(`${this.baseURL}cart/?token=${this.token}`).then(
+          (response) => {
+            if (response.status === 200) {
+              this.$router.push("/cart");
+            }
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      },
     },
     mounted() {
       this.id = this.$route.params.id;
@@ -87,6 +153,7 @@
       this.category = this.categories.find(
         (category) => category.id == this.product.categoryId
       );
+      this.token = localStorage.getItem("token");
     },
   };
   </script>
