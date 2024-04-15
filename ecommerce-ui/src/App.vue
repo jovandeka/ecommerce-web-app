@@ -7,13 +7,15 @@
   @fetchData="fetchData"
   >
   </router-view>
+  <Footer/>
 </template>
 
 <script>
 import axios from "axios";
 import Navbar from "./components/Navbar.vue";
+import Footer from "./components/Footer.vue";
 export default {
-  components: { Navbar },
+  components: { Navbar, Footer },
   data() {
     return {
       baseURL: "http://localhost:8080",

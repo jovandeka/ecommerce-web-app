@@ -8,10 +8,12 @@
         </header>
       </div>
     </div>
-    <div class="container">
+    <!-- display top categories -->
+    <div class="container-fluid" id="topCat">
+      <div class="container p-4">
         <div class="row">
           <div class="col-12 text-center">
-            <h2 class="pt-3">Top Categories</h2>
+            <h2 class="pt-3" id="titleCat">Top Categories</h2>
           </div>
         </div>
         <div class="row">
@@ -20,23 +22,43 @@
           </div>
         </div>
       </div>
+    </div>
+    <!-- display top products -->
+    
+    <div class="container-fluid" id="topProd">
+      <div class="container p-4">
+        <div class="row">
+          <div class="col-12 text-center">
+            <h2 class="pt-3" id="titleProd">Top Products</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div v-for="index in this.productSize" :key="index" class="col-md-6 col-xl-4 col-12 pt-3 justify-content-around d-flex">
+            <ProductBox :product="products[index-1]"/>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import CategoryCard from '@/components/Category/CategoryCard.vue';
+import ProductBox from '@/components/ProductBox.vue';
 export default {
   name: 'HomeView',
-  components: {CategoryCard
+  components: {CategoryCard, ProductBox
   },
-  props: ["categories"],
+  props: ["categories", "products"],
   data(){
     return{
-      categorySize: 0
+      categorySize: 0,
+      ProductSize: 0
     }
   },
   mounted(){
     this.categorySize = Math.min(6, this.categories.length);
+    this.productSize = Math.min(9, this.products.length);
   }
 }
 </script>
@@ -53,4 +75,17 @@ export default {
   #heading{
     font-weight: 400;
   }
-</style>
+  #topCat{
+    background-color:lemonchiffon;
+  }
+  #topProd{
+    background-color:cornflowerblue;
+  }
+  #titleCat{
+    font-weight: bolder;
+  }
+  #titleProd{
+    font-weight: bolder;
+    color: white;
+  }
+  </style>
