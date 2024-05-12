@@ -1,6 +1,6 @@
 <template>
     <footer>
-      <div class="container pt-5">
+      <div class="container pt-4">
         <div class="row">
           <div class="col-md-3 col-6">
             <ul style="list-style-type: none">
@@ -42,7 +42,7 @@
   
         <div class="row">
           <div class="col-12">
-            <div class="text-center py-2">
+            <div class="text-center ">
               <img id="logo" src="../assets/icon.png" />
             </div>
           </div>

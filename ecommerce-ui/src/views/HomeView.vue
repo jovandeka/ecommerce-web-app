@@ -13,7 +13,7 @@
       <div class="container p-4">
         <div class="row">
           <div class="col-12 text-center">
-            <h2 class="pt-3" id="titleCat">Top Categories</h2>
+            <h2 class="pt-1" id="titleCat">Top Categories</h2>
           </div>
         </div>
         <div class="row">
@@ -29,7 +29,7 @@
       <div class="container p-4">
         <div class="row">
           <div class="col-12 text-center">
-            <h2 class="pt-3" id="titleProd">Top Products</h2>
+            <h2 class="pt-1" id="titleProd">Top Products</h2>
           </div>
         </div>
         <div class="row">

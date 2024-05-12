@@ -5,7 +5,6 @@
       <router-link class="navbar-brand" :to="{ name: 'HomeView' }">
         <img id="logo" src="../assets/icon.png" />
       </router-link>
-      <!--    Burger Button-->
       <button
         class="navbar-toggler"
         type="button"
@@ -47,7 +46,38 @@
             </div>
           </div>
         </form>
-        <router-link :to="{ name: 'Admin' }"> Admin </router-link>
+        <!--      DropDowns-->
+      <ul class="navbar-nav ml-auto">
+        
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link text-light dropdown-toggle"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Accounts
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            
+            <router-link class="dropdown-item" :to="{ name: 'Admin' }">Admin</router-link>
+            <router-link
+              class="dropdown-item"
+              v-if="!token"
+              :to="{ name: 'Signin' }"
+              >Log In</router-link>
+            <router-link
+              class="dropdown-item"
+              v-if="!token"
+              :to="{ name: 'Signup' }"
+              >Sign Up</router-link>
+            
+          </div>
+        </li>
+      </ul>
       </div>
     </nav>
   </template>
@@ -63,7 +93,5 @@
     margin-left: 20px;
     margin-right: 20px;
   }
-  a {
-    color: white;
-  }
+  
   </style>
