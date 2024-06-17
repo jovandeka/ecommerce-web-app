@@ -21,6 +21,7 @@ public class Product {
 
     //Many to one
     @ManyToOne
+    //@JsonIgnore
     @JoinColumn(name = "category_id")
     Category category;
 

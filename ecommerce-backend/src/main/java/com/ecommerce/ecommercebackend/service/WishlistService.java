@@ -8,9 +8,11 @@ import com.ecommerce.ecommercebackend.repository.WishlistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class WishlistService {
@@ -31,5 +33,14 @@ public class WishlistService {
             productDtos.add(productService.getProductDto(wishlist.getProduct()));
         }
         return productDtos;
+    }
+
+    public boolean isProductInWishlist(User user, Integer productId) {
+        return wishlistRepository.existsByUserAndProductId(user, productId);
+    }
+
+    @Transactional
+    public void removeProductFromWishlist(User user, Product product) {
+        wishlistRepository.deleteByUserAndProduct(user, product);
     }
 }

@@ -45,8 +45,12 @@
 <script>
 import CategoryCard from '@/components/Category/CategoryCard.vue';
 import ProductBox from '@/components/ProductBox.vue';
+import { store } from '../StoreToken.js';
 export default {
   name: 'HomeView',
+  setup() {
+    return { store };
+  },
   components: {CategoryCard, ProductBox
   },
   props: ["categories", "products"],

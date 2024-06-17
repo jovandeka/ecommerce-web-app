@@ -56,6 +56,7 @@
   <script>
   import axios from 'axios';
   import swal from 'sweetalert';
+  import { store } from '../StoreToken.js';
   export default {
     // eslint-disable-next-line vue/multi-word-component-names
     name: "Signin",
@@ -80,8 +81,7 @@
         await axios
           .post(`${this.baseURL}/user/signin`, user)
           .then((res) => {
-            localStorage.setItem("token", res.data.token);
-            this.$emit("fetchData");
+            store.setToken(res.data.token);
             this.$router.push({ name: "HomeView" });
           })
           .catch((err) => {

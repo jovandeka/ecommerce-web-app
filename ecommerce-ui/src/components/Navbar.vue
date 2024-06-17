@@ -66,14 +66,20 @@
             <router-link class="dropdown-item" :to="{ name: 'Admin' }">Admin</router-link>
             <router-link
               class="dropdown-item"
-              v-if="!token"
-              :to="{ name: 'Signin' }"
-              >Log In</router-link>
+              v-if="store.token"
+              :to="{ name: 'Wishlist' }"
+              >Wishlist</router-link>
             <router-link
               class="dropdown-item"
-              v-if="!token"
+              v-if="!store.token"
+              :to="{ name: 'Signin' }"
+              >Sign In</router-link>
+            <router-link
+              class="dropdown-item"
+              v-if="!store.token"
               :to="{ name: 'Signup' }"
               >Sign Up</router-link>
+              <a class="dropdown-item" v-if="store.token" href="#" @click="signout">Sign Out</a>
             
           </div>
         </li>
@@ -82,9 +88,19 @@
     </nav>
   </template>
   <script>
+  import { store } from '../StoreToken.js';
   export default {
     // eslint-disable-next-line vue/multi-word-component-names
     name: "Navbar",
+    setup() {
+    return { store };
+    },
+    methods:{
+      signout(){
+        store.clearToken();
+        this.$router.push({ name: "Signin" });
+      }
+    },
   };
   </script>
   <style scoped>

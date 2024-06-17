@@ -46,4 +46,22 @@ public class WishlistController {
         List<ProductDto> productDtos = wishlistService.getWishlistForUser(user);
         return new ResponseEntity<>(productDtos,HttpStatus.OK);
     }
+
+    @GetMapping("/check")
+    public ResponseEntity<Boolean> checkWishlist(@RequestParam("token") String token, @RequestParam("id") Integer productId) {
+        authentificationService.authenticate(token);
+        User user = authentificationService.getUser(token);
+        boolean isInWishlist = wishlistService.isProductInWishlist(user, productId);
+        return new ResponseEntity<>(isInWishlist, HttpStatus.OK);
+    }
+
+    // Remove product from wishlist
+    @PostMapping("/remove")
+    public ResponseEntity<ApiResponse> removeFromWishlist(@RequestBody Product product, @RequestParam("token") String token) {
+        authentificationService.authenticate(token);
+        User user = authentificationService.getUser(token);
+        wishlistService.removeProductFromWishlist(user, product);
+        ApiResponse apiResponse = new ApiResponse(true, "Removed from wishlist");
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+    }
 }

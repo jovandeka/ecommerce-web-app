@@ -47,16 +47,16 @@
   
           <button
             id="wishlist-button"
-            class="btn mr-3 p-1 py-0"
-            :class="{ product_added_wishlist: isAddedToWishlist }"
-            @click="addToWishList(this.id)"
+            class="btn mr-3 p-2 py-0"
+            :class="{'btn-blue': isAddedToWishlist == false, 'btn-red': isAddedToWishlist == true}"
+            @click="addToWishListOrRemove(this.id)"
           >
             {{ wishlistString }}
           </button>
           <button
             id="show-cart-button"
             type="button"
-            class="btn mr-3 p-1 py-0"
+            class="btn mr-3 p-2 py-0"
             @click="listCartItems()"
           >
             Show Cart
@@ -86,33 +86,85 @@
     },
     props: ["baseURL", "products", "categories"],
     methods: {
-      addToWishList(productId) {
-        axios
-          .post(`${this.baseURL}wishlist/add?token=${this.token}`, {
-            id: productId,
-          })
-          .then(
-            (response) => {
-              if (response.status == 201) {
-                this.isAddedToWishlist = true;
-                this.wishlistString = "Added to WishList";
+        addToWishListOrRemove(productId) {
+        if (!this.token) {
+          swal({
+            text: "Please sign in to add to wishlist",
+            icon: "error",
+          });
+          return;
+        }
+
+        axios.get(`${this.baseURL}/wishlist/check`, {
+          params: { id: productId, token: this.token }
+        })
+        .then(response => {
+          if (response.data) {
+            // If the item is in the wishlist, remove it
+            axios.post(`${this.baseURL}/wishlist/remove?token=${this.token}`, {
+              id: productId,
+            })
+            .then(response => {
+              if (response.status === 200) {
+                this.isAddedToWishlist = false;
+                this.wishlistString = "Add to wishlist";
+                swal({
+                  text: "Item successfully removed from wishlist",
+                  icon: "info",
+                });
               }
-            },
-            (error) => {
-              console.log(error);
-            }
-          );
+            })
+            .catch(error => {
+              console.error("Error removing item from wishlist:", error);
+              swal({
+                text: "Unable to remove item from wishlist",
+                icon: "error",
+              });
+            });
+          } else {
+            // If the item is not in the wishlist, add it
+            axios.post(`${this.baseURL}/wishlist/add?token=${this.token}`, {
+              id: productId,
+            })
+            .then(response => {
+              if (response.status === 201) {
+                this.isAddedToWishlist = true;
+                this.wishlistString = "Remove from wishlist";
+                swal({
+                  text: "Item successfully added to wishlist",
+                  icon: "success",
+                });
+              }
+            })
+            .catch(error => {
+              console.error("Error adding item to wishlist:", error);
+              swal({
+                text: "Unable to add item to wishlist",
+                icon: "error",
+              });
+            });
+          }
+        })
+        .catch(error => {
+          console.error("Error checking wishlist status:", error);
+          swal({
+            text: "Error checking wishlist status",
+            icon: "error",
+          });
+        });
       },
+
+
       addToCart(productId) {
         if (!this.token) {
           swal({
-            text: "Please log in first!",
+            text: "Please sign in first",
             icon: "error",
           });
           return;
         }
         axios
-          .post(`${this.baseURL}cart/add?token=${this.token}`, {
+          .post(`${this.baseURL}/cart/add?token=${this.token}`, {
             productId: productId,
             quantity: this.quantity,
           })
@@ -120,7 +172,7 @@
             (response) => {
               if (response.status == 201) {
                 swal({
-                  text: "Product Added to the cart!",
+                  text: "Product added to the cart",
                   icon: "success",
                   closeOnClickOutside: false,
                 });
@@ -135,7 +187,7 @@
       },
   
       listCartItems() {
-        axios.get(`${this.baseURL}cart/?token=${this.token}`).then(
+        axios.get(`${this.baseURL}/cart/?token=${this.token}`).then(
           (response) => {
             if (response.status === 200) {
               this.$router.push("/cart");
@@ -154,6 +206,24 @@
         (category) => category.id == this.product.categoryId
       );
       this.token = localStorage.getItem("token");
+
+      if (this.token) {
+      axios.get(`${this.baseURL}/wishlist/check`, {
+        params: { id: this.id, token: this.token }
+      })
+      .then(response => {
+        if (response.data) {
+          this.isAddedToWishlist = true;
+          this.wishlistString = "Remove from wishlist";
+        } else {
+          this.isAddedToWishlist = false;
+          this.wishlistString = "Add to wishlist";
+        }
+      })
+      .catch(error => {
+        console.error("Error checking wishlist status:", error);
+      });
+    }
     },
   };
   </script>
@@ -181,13 +251,20 @@
   }
   
   #wishlist-button {
-    background-color: #b9b9b9;
-    border-radius: 0;
   }
   
   #show-cart-button {
-    background-color: #131921;
+    background-color: rgb(0, 0, 0);
     color: white;
-    border-radius: 0;
   }
+
+  .btn-blue {
+  background-color: rgb(86, 178, 235);
+  color: white;
+}
+
+.btn-red {
+  background-color: rgb(235, 69, 95);
+  color: white;
+}
   </style>
